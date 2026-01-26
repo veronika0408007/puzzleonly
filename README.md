@@ -2,7 +2,7 @@
 Online Puzzle Application
 
 # Darba plāns
-| Nedeļas | Plāns |
+| Nedēļas | Plāns |
 |----------|----------|
 | 1 | Sagatavot izstrades vidi.(bibliotekas, atkaribas(dependencies) |
 | 2 | Value E  | 
