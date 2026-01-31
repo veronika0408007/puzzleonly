@@ -1,7 +1,7 @@
 # PuzzleOnly
 Online Puzzle Application
 # Projekta apraksts 
-Online Puzle "PuzzleOnly" ir interaktīva tīmekļa vietne, kur lietotāji var izveidot un risināt puzles, izmantojot gatavus vai pašu augšupielādētus attēlus. Lietotājs var izvēlēties puzles izmēru, sekot līdzi risināšanas laikam un dažādas izmantot palīgfunkcijas. 
+Online Puzle "PuzzleOnly" ir interaktīva tīmekļa vietne, kur lietotāji var izveidot un risināt puzles, izmantojot gatavus vai pašu augšupielādētus attēlus. Lietotājs var izvēlēties puzles izmēru, sekot līdzi risināšanas laikam un izmantot dažādas palīgfunkcijas. 
 Projekts attīsta loģisko domāšanu un koncentrēšanās spējas.
 ## Funkcionalitāte
 - Attēlu izvēle no iepriekš sagatavotas galerijas vai paša lietotāja augšupielāde
