@@ -11,6 +11,8 @@ Projekts attīsta loģisko domāšanu un koncentrēšanās spējas.
 - Laika uzskaites funkcija
 - Pareizo/nepareizo pozīciju pārbaude
 - Attēla priekšskatījums
+# Projekta dokumentācija
+
 # Darba plāns
 | Nedēļas | Plāns |
 |----------|----------|
