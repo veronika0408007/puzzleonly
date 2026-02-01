@@ -11,6 +11,7 @@ Projekts attīsta loģisko domāšanu un koncentrēšanās spējas.
 - Laika uzskaites funkcija
 - Pareizo/nepareizo pozīciju pārbaude
 - Attēla priekšskatījums
+- Reģistrēti lietotāji platformā var saglabāt savus rezultātus
 # Projekta dokumentācija
 https://github.com/veronika0408007/puzzleonly/blob/main/PuzzleOnly.Dokumentacija.docx
 # Darba plāns
