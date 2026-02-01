@@ -12,7 +12,7 @@ Projekts attīsta loģisko domāšanu un koncentrēšanās spējas.
 - Pareizo/nepareizo pozīciju pārbaude
 - Attēla priekšskatījums
 # Projekta dokumentācija
-
+https://github.com/veronika0408007/puzzleonly/blob/main/PuzzleOnly.Dokumentacija.docx
 # Darba plāns
 | Nedēļas | Plāns |
 |----------|----------|
