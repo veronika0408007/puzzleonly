@@ -16,13 +16,13 @@ Projekts attīsta loģisko domāšanu un koncentrēšanās spējas.
 # Darba plāns
 | Nedēļas | Plāns |
 |----------|----------|
-| 1 | Sagatavot izstrades vidi.(bibliotekas, atkaribas(dependencies) |
-| 2 | ..  | 
-| 3 | Dizaina izstrāde ar CSS (krāsas, izkārtojums, responsīvs dizains) |
-| 4 | Attēlu augšupielādes funkcionalitātes izstrāde | 
-| 5 | Attēla sadalīšana puzles detaļās, izmantojot JavaScript |
-| 6 | Puzles detaļu nejauša jaukšana (shuffle) | 
-| 7 | Puzles detaļu pārvietošanas (drag & drop) mehānisma izstrāde|
-| 8 | Laika uzskaites, restartēšanas un oriģinālā attēla apskates funkciju ieviešana | 
-| 9 | .. |
+| 1 | Sagatavot izstrades vidi, HTML struktūras izveide |
+| 2 | Dizaina izstrāde ar CSS (krāsas, izkārtojums) | 
+| 3 | Attēlu augšupielādes funkcionalitātes izstrāde |
+| 4 | Attēla sadalīšana puzles detaļās | 
+| 5 | Puzles detaļu nejauša jaukšana (shuffle) |
+| 6 | Puzles detaļu pārvietošanas (drag & drop) mehānisma izstrāde | 
+| 7 | Laika uzskaites un oriģinālā attēla apskates funkciju ieviešana |
+| 8 | Lietotāju reģistrācijas izstrāde ar Supabase bāzes palīdzību | 
+| 9 | Rezultātu saglabāšana reģistrētiem lietotājiem |
 |10 | Uzlabojumi, akcepttestēšana un vienību testēšana vai integrāciju testēšana | 
