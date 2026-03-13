@@ -506,7 +506,7 @@ function startTimer() {
     const ms = Math.floor(t % 1000).toString().padStart(3,'0');
     const sec = Math.floor(t/1000) % 60;
     const min = Math.floor(t/60000);
-    timerDisplay.textContent = `Время: ${min}:${sec.toString().padStart(2,'0')}:${ms}`;
+    timerDisplay.textContent = `Time: ${min}:${sec.toString().padStart(2,'0')}:${ms}`;
   }, 50);
 }
 function stopTimer(){ clearInterval(timer); }
