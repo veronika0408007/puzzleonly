@@ -228,7 +228,7 @@ main {
 </div>
 
 <script>
-/* ===== Presets ===== */
+/* Presets */
 const presets = [
   { id:'p1', title:'Mountain', url:'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop' },
   { id:'p2', title:'City', url:'https://www.latvia.travel/sites/default/files/styles/mobile_promo/public/media_image/37315458162_8e53834697_k.jpg?itok=E_xOti-8q=80&w=1200&auto=format&fit=crop' },
@@ -236,7 +236,7 @@ const presets = [
   { id:'p4', title:'Friends', url:'https://static01.nyt.com/images/2020/02/21/multimedia/21xp-friends/21xp-friends-articleLarge.jpg?quality=75&auto=webp&disable=upscaleq=80&w=1200&auto=format&fit=crop' }
 ];
 
-/* ===== Elements ===== */
+/* Elements */
 const menuToggleBtn = document.getElementById('menuToggleBtn');
 const menuOverlay = document.getElementById('menuOverlay');
 const presetList = document.getElementById('presetList');
@@ -264,7 +264,7 @@ const overlayShuffle = document.getElementById('overlayShuffle');
 const overlayNew = document.getElementById('overlayNew');
 const overlayClose = document.getElementById('overlayClose');
 
-/* ===== State ===== */
+/* State */
 let selectedPreset = presets[0];
 let uploadedURL = '';
 let imageURL = selectedPreset.url;
@@ -278,7 +278,7 @@ let pieceIdCounter = 0;
 let solvedAlready = false;
 let selectedPiece = null;
 
-/* ===== Build preset thumbnails ===== */
+/* Build preset thumbnails */
 presets.forEach(p=>{
   const el = document.createElement('div');
   el.className = 'presetItem';
@@ -294,7 +294,7 @@ presets.forEach(p=>{
 });
 if (presetList.firstChild) presetList.firstChild.classList.add('selected');
 
-/* ===== Menu toggle ===== */
+/*  Menu toggle */
 function openMenu() {
   menuOverlay.style.display = 'flex';
   menuOverlay.setAttribute('aria-hidden','false');
@@ -312,7 +312,7 @@ menuClose.addEventListener('click', closeMenu);
 menuOverlay.addEventListener('click', (e)=> { if (e.target === menuOverlay) closeMenu(); });
 document.addEventListener('keydown', (e)=> { if (e.key==='Escape') { if (menuOverlay.style.display==='flex') closeMenu(); if (overlayComplete.style.display==='flex') hideComplete(); } });
 
-/* ===== Menu upload handling ===== */
+/* Menu upload handling */
 menuUpload.addEventListener('change', e=>{
   const f = e.target.files && e.target.files[0];
   if (!f) return;
@@ -323,7 +323,7 @@ menuUpload.addEventListener('change', e=>{
   selectedPreset = null;
 });
 
-/* also quick upload */
+/* quick upload */
 imageUpload.addEventListener('change', e=>{
   const f = e.target.files && e.target.files[0];
   if (!f) return;
@@ -333,7 +333,7 @@ imageUpload.addEventListener('change', e=>{
   message.textContent = 'A custom image has been uploaded. Open the menu and click "Create Puzzle.';
 });
 
-/* ===== Preset size buttons ===== */
+/* Preset size buttons  */
 presetSizes.querySelectorAll('button').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     presetSizes.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
@@ -361,7 +361,7 @@ menuCreate.addEventListener('click', ()=>{
   closeMenu();
 });
 
-/* ===== Puzzle creation & logic ===== */
+/* Puzzle creation */
 function createPuzzle(imgSrc, c, r) {
   cols = c; rows = r;
   const canvasSize = 500;
@@ -548,18 +548,16 @@ function onTouchStart(e){ e.preventDefault(); const piece = e.currentTarget; tou
 function onTouchMove(e){ if (!touchDrag.piece) return; e.preventDefault(); const touch = e.changedTouches[0]; const el = document.elementFromPoint(touch.clientX, touch.clientY); const cell = el ? el.closest('.cell') : null; if (cell !== touchDrag.currentTargetCell){ if (touchDrag.currentTargetCell) touchDrag.currentTargetCell.classList.remove('drop-target'); touchDrag.currentTargetCell = cell; if (cell) cell.classList.add('drop-target'); } }
 function onTouchEnd(e){ if (!touchDrag.piece) return; const piece = touchDrag.piece; const targetCell = touchDrag.currentTargetCell; piece.classList.remove('dragging'); if (targetCell && targetCell !== touchDrag.srcCell){ const targetPiece = targetCell.firstChild; const srcCell = touchDrag.srcCell; srcCell.appendChild(targetPiece); targetCell.appendChild(piece); if (enableCheckEl.checked) checkPositions(); else if (isSolved()) finishPuzzle(); } document.querySelectorAll('.cell.drop-target').forEach(el=>el.classList.remove('drop-target')); touchDrag.piece=null; touchDrag.srcCell=null; touchDrag.currentTargetCell=null; }
 
-/* ===== Toggleable "Check positions" behavior ===== */
+/* Toggleable "Check positions" behavior */
 /* When the checkbox is changed, apply immediate effect:
    - If enabled: run checkPositions() to show current green/red borders.
-   - If disabled: clear all borders (no visual checking).
+   - If disabled: clear all borders(no visual checking).
 */
 enableCheckEl.addEventListener('change', () => {
   if (enableCheckEl.checked) {
-    // Run check to show current correctness
     checkPositions();
     message.textContent = 'Position checking is enabled. Correct/incorrect tiles are highlighted.';
   } else {
-    // Clear visual markers
     document.querySelectorAll('.piece').forEach(p => p.style.border = '2px solid transparent');
     message.textContent = 'Position checking is disabled. The puzzle will only be considered solved if it is in the correct order.';
   }
