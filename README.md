@@ -14,6 +14,8 @@ Projekts attīsta loģisko domāšanu un koncentrēšanās spējas.
 - Reģistrēti lietotāji platformā var saglabāt savus rezultātus
 # Projekta dokumentācija
 https://github.com/veronika0408007/puzzleonly/blob/main/PuzzleOnly.Dokumentacija.docx
+# Projekta testēšanas pārskats
+https://docs.google.com/document/d/1m8Gk9zDw5oDB4sHC6YxztqiCgR3xJh0jymZDQhKT-Mo/edit?tab=t.0
 # Darba plāns
 | Nedēļas | Plāns |
 |----------|----------|
