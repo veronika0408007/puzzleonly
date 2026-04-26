@@ -1,5 +1,5 @@
 # PuzzleOnly
-Online Puzzle Application
+Online Puzzle Application.  Saite: https://veronika0408007.github.io/puzzleonly/game
 # Projekta apraksts 
 Online Puzle "PuzzleOnly" ir interaktīva tīmekļa vietne, kur lietotāji var izveidot un risināt puzles, izmantojot gatavus vai pašu augšupielādētus attēlus. Lietotājs var izvēlēties puzles izmēru, sekot līdzi risināšanas laikam un izmantot dažādas palīgfunkcijas. 
 Projekts attīsta loģisko domāšanu un koncentrēšanās spējas.
