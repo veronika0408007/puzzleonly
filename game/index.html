@@ -1,569 +1,156 @@
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Online puzzle</title>
-<style>
-:root { --card-bg: #fff; --accent: #2196f3; --muted: #666; }
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 18px;
-  background: #f5f5f5;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-header {
-  width:100%;
-  max-width:1100px;
-  display:flex;
-  gap:12px;
-  align-items:center;
-  margin-bottom:12px;
-}
-
-h1 { margin:0; font-size:1.25rem; flex:0 0 auto; }
-
-#topControls {
-  margin-left:auto;
-  display:flex;
-  gap:8px;
-  align-items:center;
-}
-
-.btn {
-  padding:8px 12px;
-  border-radius:6px;
-  border:1px solid #ddd;
-  background:var(--card-bg);
-  cursor:pointer;
-  font-size:0.95rem;
-}
-.btn.primary { background:var(--accent); color:#fff; border-color:#1976d2; }
-.btn.ghost { background:transparent; border:1px solid transparent; }
-
-main {
-  width:100%;
-  max-width:1100px;
-  display:flex;
-  gap:14px;
-  align-items:flex-start;
-}
-
-/* Puzzle area */
-#puzzleArea { flex:1; display:flex; gap:14px; flex-direction:column; align-items:flex-start; }
-
-#controls {
-  width:100%;
-  background:var(--card-bg);
-  padding:10px;
-  border-radius:8px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.06);
-  display:flex;
-  gap:8px;
-  align-items:center;
-  flex-wrap:wrap;
-}
-
-#puzzle {
-  display:grid;
-  gap:2px;
-  border:2px solid #000;
-  padding:5px;
-  background:#fafafa;
-  touch-action:none;
-}
-
-.cell { position:relative; overflow:hidden; background:#eee; }
-.piece {
-  width:100%;
-  height:100%;
-  background-size:cover;
-  cursor:grab;
-  user-select:none;
-  transition:transform 150ms ease, border-color 120ms;
-  box-sizing:border-box;
-  border:2px solid transparent;
-}
-.piece.dragging { opacity:0.6; cursor:grabbing; transform:scale(1.02); z-index:10; }
-.piece.selected { outline:3px dashed #666; }
-
-.cell.drop-target { box-shadow:inset 0 0 0 3px rgba(0,120,215,0.18); }
-
-#previewContainer { display:none; margin-top:8px; }
-#previewPuzzle { display:grid; gap:2px; border:2px solid #444; padding:5px; background:#fff; }
-
-#message { margin-top:8px; color:var(--muted); font-size:0.95rem; }
-
-#overlayComplete {
-  position:fixed; inset:0; display:none;
-  background:rgba(0,0,0,0.55);
-  align-items:center; justify-content:center;
-  z-index:2000; padding:20px;
-}
-#overlayComplete .modal {
-  background:#fff; padding:18px; border-radius:8px; width:420px; max-width:95%; text-align:center;
-  box-shadow:0 10px 30px rgba(0,0,0,0.28);
-}
-.modal h2 { margin:8px 0; }
-.modal p { margin:8px 0 14px; color:#444; }
-
-/* Menu overlay (toggleable from top button) */
-#menuOverlay {
-  position:fixed; inset:0; display:none;
-  background:rgba(0,0,0,0.45);
-  align-items:center; justify-content:center;
-  z-index:2100; padding:18px;
-}
-#menuOverlay .menu {
-  width:760px; max-width:95%; background:var(--card-bg); border-radius:8px; padding:14px;
-  box-shadow:0 10px 40px rgba(0,0,0,0.2);
-  display:flex; gap:12px; align-items:flex-start;
-}
-#menuSidebar { width:240px; }
-#presetList { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-.presetItem { border:2px solid transparent; border-radius:6px; overflow:hidden; cursor:pointer; background:#f6f6f6; }
-.presetItem.selected { border-color:var(--accent); box-shadow:0 6px 18px rgba(33,150,243,0.12); }
-.presetItem img { display:block; width:100%; height:84px; object-fit:cover; }
-
-#menuRight { flex:1; display:flex; flex-direction:column; gap:10px; }
-.presetSizes { display:flex; gap:8px; flex-wrap:wrap; }
-.presetSizes button { padding:8px 10px; border-radius:6px; border:1px solid #ddd; background:#fff; cursor:pointer; }
-.presetSizes button.active { background:var(--accent); color:#fff; border-color:#1976d2; }
-
-@media (max-width:800px) {
-  #menuOverlay .menu { flex-direction:column; }
-  #menuSidebar { width:100%; }
-}
-</style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Online Puzzle - Play</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <header>
-  <h1>Online puzzle</h1>
-
-  <div id="topControls">
-    <button id="menuToggleBtn" class="btn">Menu</button>
-    <button id="previewBtn" class="btn">Preview</button>
-    <button id="shuffleBtn" class="btn" disabled>Shuffle</button>
+  <div class="header-container">
+    <h1>🧩 Online Puzzle</h1>
+    <div id="topControls">
+      <span id="userInfo"></span>
+      <button id="logoutBtn" class="btn btn-secondary" style="display:none;">Sign out</button>
+      <button id="headerSignup" class="btn btn-primary">👤 Register</button>
+      <button id="historyBtn" class="btn btn-secondary">📊 History</button>
+      <button id="menuBtn" class="btn btn-secondary">🎮 Menu</button>
+      <button id="previewBtn" class="btn btn-secondary">👁️ Preview</button>
+      <button id="shuffleBtn" class="btn btn-secondary" disabled>🔀 Shuffle</button>
+    </div>
   </div>
 </header>
 
 <main>
   <div id="puzzleArea">
-    <div id="controls" aria-label="Controls">
-      <input type="file" id="imageUpload" accept="image/*" title="Upload image">
-      <label style="display:flex;align-items:center;gap:6px;">
-        <input type="checkbox" id="enableCheck" checked> Check positions
-      </label>
-      <div style="margin-left:auto;color:#666;font-size:0.95rem;">Drag or click on tiles to rearrange them</div>
+    <div id="controls" class="controls-panel">
+      <div class="controls-group">
+        <input type="file" id="imageUpload" accept="image/*" title="Upload image" class="file-input">
+        <label class="checkbox-label">
+          <input type="checkbox" id="enableCheck" checked>
+          <span>Check positions</span>
+        </label>
+      </div>
+      <div class="controls-hint">Drag or click on tiles to rearrange them</div>
     </div>
 
-    <div id="puzzle" aria-label="Puzzle area"></div>
+    <div id="puzzle" class="puzzle-grid" aria-label="Puzzle area"></div>
 
-    <div id="previewContainer" aria-hidden="true">
-      <h3 style="margin:8px 0 6px;">Preview:</h3>
-      <div id="previewPuzzle"></div>
+    <div id="previewContainer" class="preview-section" aria-hidden="true">
+      <h3>Complete Image Preview:</h3>
+      <div id="previewPuzzle" class="preview-grid"></div>
     </div>
 
-    <div id="message" aria-live="polite">Click "Menu" at the top to select an image and size.</div>
-    <h3 id="timer">Time: 0:00:000</h3>
+    <div class="game-info">
+      <div id="message" class="message" aria-live="polite">
+        Loading...
+      </div>
+      <div class="timer-section">
+        <h3 id="timer" class="timer">⏱️ Time: 0:00:000</h3>
+      </div>
+    </div>
   </div>
 </main>
 
-<!-- Completion overlay -->
-<div id="overlayComplete" role="dialog" aria-modal="true" aria-hidden="true">
-  <div class="modal" role="document">
-    <h2> uhoo, the puzzle is complete!🎉</h2>
-    <p id="overlayTime">Time: 0:00:000</p>
-    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-      <button id="overlayShuffle" class="btn">Shuffle</button>
-      <button id="overlayNew" class="btn primary">Create new puzzle</button>
-      <button id="overlayClose" class="btn">Close</button>
+<! Setup (appears on load)>
+<div id="setupOverlay" class="overlay setup-overlay active" role="dialog" aria-modal="true" aria-hidden="false">
+  <div class="modal modal-setup">
+    <div class="setup-header">
+      <h2>🎮 Create Your Puzzle</h2>
+      <p>Choose an image and difficulty to start playing</p>
+    </div>
+    <div class="setup-content">
+      <div class="setup-section">
+        <h3>📸 Select Image</h3>
+        <div id="presetList" class="preset-list"></div>
+        <div class="upload-area">
+          <label for="setupUpload" class="upload-label">
+            📁 Upload Your Image
+          </label>
+          <input type="file" id="setupUpload" accept="image/*" style="display:none;">
+        </div>
+      </div>
+      <div class="setup-section">
+        <h3>📏 Select Size</h3>
+        <div class="presetSizes" id="presetSizes">
+          <button data-cols="3" data-rows="3" class="size-btn">
+            <span class="size-label">3×3</span>
+            <span class="size-info">Easy</span>
+          </button>
+          <button data-cols="5" data-rows="6" class="size-btn active">
+            <span class="size-label">5×6</span>
+            <span class="size-info">Medium</span>
+          </button>
+          <button data-cols="8" data-rows="6" class="size-btn">
+            <span class="size-label">8×6</span>
+            <span class="size-info">Hard</span>
+          </button>
+          <button data-cols="10" data-rows="8" class="size-btn">
+            <span class="size-label">10×8</span>
+            <span class="size-info">Expert</span>
+          </button>
+        </div>
+        <div class="custom-size">
+          <label>Custom Size:</label>
+          <div class="custom-inputs">
+            <input type="number" id="setupCols" min="1" max="30" value="5">
+            <span>×</span>
+            <input type="number" id="setupRows" min="1" max="30" value="6">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="setup-actions">
+      <button id="setupCreate" class="btn btn-primary">🚀 Start Puzzle</button>
+    </div>
+    <div class="setup-auth">
+      <p id="authMessage" style="display:none;">📌 <strong>Sign up to save your results!</strong></p>
+      <button id="setupSignup" class="btn btn-secondary" style="display:none;">Create Account</button>
     </div>
   </div>
 </div>
 
-<!-- Menu overlay (toggleable) -->
-<div id="menuOverlay" role="dialog" aria-modal="true" aria-hidden="true">
-  <div class="menu" role="document" aria-label="Image and size selection menu">
-    <div id="menuSidebar">
-      <h3 style="margin:0 0 8px 0;">Choose image</h3>
-      <div id="presetList"></div>
-      <div style="margin-top:10px;">
-        <label style="font-size:0.9rem;">Upload yours</label>
-        <input type="file" id="menuUpload" accept="image/*" style="width:100%;margin-top:6px;">
-      </div>
+<! Completion >
+<div id="completionOverlay" class="overlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal modal-completion">
+    <div class="completion-celebration">
+      🎉
     </div>
-
-    <div id="menuRight">
-      <h3 style="margin:0;">Choose size</h3>
-      <div class="presetSizes" id="presetSizes">
-        <button data-cols="3" data-rows="3">3 × 3</button>
-        <button data-cols="5" data-rows="6" class="active">5 × 6</button>
-        <button data-cols="8" data-rows="6">8 × 6</button>
-        <button data-cols="10" data-rows="8">10 × 8</button>
-      </div>
-
-      <div style="display:flex;gap:8px;align-items:center;">
-        <label>Custom:
-          <input type="number" id="menuCols" min="1" max="30" value="5" style="width:70px;margin-left:6px">
-          ×
-          <input type="number" id="menuRows" min="1" max="30" value="6" style="width:70px;margin-left:6px">
-        </label>
-      </div>
-
-      <div style="display:flex;gap:8px;margin-top:auto;">
-        <button id="menuCreate" class="btn primary">Create puzzle</button>
-        <button id="menuUseUploaded" class="btn">Use uploaded</button>
-        <button id="menuClose" class="btn">Close</button>
-      </div>
-      <div style="color:#666;font-size:0.9rem;margin-top:6px;">The Menu opens on top of the page; click "Menu" again to close it.</div>
+    <div class="completion-header">
+      <h2>Puzzle Complete!</h2>
+      <p id="completionTime" class="completion-time">⏱️ Time: 0:00:000</p>
+    </div>
+    <div id="savePrompt" style="display:none;" class="save-prompt">
+      <p>📌 Sign up to save your puzzle results and track progress!</p>
+      <button id="completionSignup" class="btn btn-primary">Create Account</button>
+    </div>
+    <div id="saveSection" style="display:none;" class="save-section">
+      <button id="completionSave" class="btn btn-success">💾 Save Result</button>
+    </div>
+    <div class="completion-actions">
+      <button id="completionNew" class="btn btn-primary">➕ New Puzzle</button>
+      <button id="completionShuffle" class="btn btn-secondary">🔀 Shuffle</button>
+      <button id="completionClose" class="btn btn-ghost">Close</button>
     </div>
   </div>
 </div>
 
-<script>
-/* Presets */
-const presets = [
-  { id:'p1', title:'Mountain', url:'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop' },
-  { id:'p2', title:'City', url:'https://www.latvia.travel/sites/default/files/styles/mobile_promo/public/media_image/37315458162_8e53834697_k.jpg?itok=E_xOti-8q=80&w=1200&auto=format&fit=crop' },
-  { id:'p3', title:'Animals', url:'https://ae01.alicdn.com/kf/Sed9c41c14c834c4883a0faefbc53c9b5C.jpg?q=80&w=1200&auto=format&fit=crop' },
-  { id:'p4', title:'Friends', url:'https://static01.nyt.com/images/2020/02/21/multimedia/21xp-friends/21xp-friends-articleLarge.jpg?quality=75&auto=webp&disable=upscaleq=80&w=1200&auto=format&fit=crop' }
-];
+<!History >
+<div id="historyOverlay" class="overlay" role="dialog" aria-modal="true">
+  <div class="modal modal-history">
+    <div class="history-header">
+      <h2>📊 My Results</h2>
+      <button id="historyClose" class="btn btn-ghost">✕ Close</button>
+    </div>
+    <div id="historyList" class="history-list"></div>
+  </div>
+</div>
 
-/* Elements */
-const menuToggleBtn = document.getElementById('menuToggleBtn');
-const menuOverlay = document.getElementById('menuOverlay');
-const presetList = document.getElementById('presetList');
-const presetSizes = document.getElementById('presetSizes');
-const menuCols = document.getElementById('menuCols');
-const menuRows = document.getElementById('menuRows');
-const menuCreate = document.getElementById('menuCreate');
-const menuUseUploaded = document.getElementById('menuUseUploaded');
-const menuClose = document.getElementById('menuClose');
-const menuUpload = document.getElementById('menuUpload');
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="supabase-config.js"></script>
+<script src="puzzle.js"></script>
 
-const imageUpload = document.getElementById('imageUpload');
-const previewBtn = document.getElementById('previewBtn');
-const shuffleBtn = document.getElementById('shuffleBtn');
-const enableCheckEl = document.getElementById('enableCheck');
-const puzzle = document.getElementById('puzzle');
-const previewContainer = document.getElementById('previewContainer');
-const previewPuzzle = document.getElementById('previewPuzzle');
-const message = document.getElementById('message');
-const timerDisplay = document.getElementById('timer');
-
-const overlayComplete = document.getElementById('overlayComplete');
-const overlayTime = document.getElementById('overlayTime');
-const overlayShuffle = document.getElementById('overlayShuffle');
-const overlayNew = document.getElementById('overlayNew');
-const overlayClose = document.getElementById('overlayClose');
-
-/* State */
-let selectedPreset = presets[0];
-let uploadedURL = '';
-let imageURL = selectedPreset.url;
-let cols = 5, rows = 6;
-let pieceWidth = 100, pieceHeight = 100;
-let cells = [];
-let started = false;
-let startTime = null;
-let timer = null;
-let pieceIdCounter = 0;
-let solvedAlready = false;
-let selectedPiece = null;
-
-/* Build preset thumbnails */
-presets.forEach(p=>{
-  const el = document.createElement('div');
-  el.className = 'presetItem';
-  el.dataset.id = p.id;
-  el.innerHTML = `<img src="${p.url}" alt="${p.title}"><div style="padding:6px;font-size:12px;text-align:center;">${p.title}</div>`;
-  el.addEventListener('click', ()=>{
-    document.querySelectorAll('.presetItem').forEach(i=>i.classList.remove('selected'));
-    el.classList.add('selected');
-    selectedPreset = p;
-    imageURL = p.url;
-  });
-  presetList.appendChild(el);
-});
-if (presetList.firstChild) presetList.firstChild.classList.add('selected');
-
-/*  Menu toggle */
-function openMenu() {
-  menuOverlay.style.display = 'flex';
-  menuOverlay.setAttribute('aria-hidden','false');
-  document.body.style.overflow = 'hidden';
-}
-function closeMenu() {
-  menuOverlay.style.display = 'none';
-  menuOverlay.setAttribute('aria-hidden','true');
-  document.body.style.overflow = '';
-}
-menuToggleBtn.addEventListener('click', () => {
-  if (menuOverlay.style.display === 'flex') closeMenu(); else openMenu();
-});
-menuClose.addEventListener('click', closeMenu);
-menuOverlay.addEventListener('click', (e)=> { if (e.target === menuOverlay) closeMenu(); });
-document.addEventListener('keydown', (e)=> { if (e.key==='Escape') { if (menuOverlay.style.display==='flex') closeMenu(); if (overlayComplete.style.display==='flex') hideComplete(); } });
-
-/* Menu upload handling */
-menuUpload.addEventListener('change', e=>{
-  const f = e.target.files && e.target.files[0];
-  if (!f) return;
-  if (uploadedURL) URL.revokeObjectURL(uploadedURL);
-  uploadedURL = URL.createObjectURL(f);
-  imageURL = uploadedURL;
-  document.querySelectorAll('.presetItem').forEach(i=>i.classList.remove('selected'));
-  selectedPreset = null;
-});
-
-/* quick upload */
-imageUpload.addEventListener('change', e=>{
-  const f = e.target.files && e.target.files[0];
-  if (!f) return;
-  if (uploadedURL) URL.revokeObjectURL(uploadedURL);
-  uploadedURL = URL.createObjectURL(f);
-  imageURL = uploadedURL;
-  message.textContent = 'A custom image has been uploaded. Open the menu and click "Create Puzzle.';
-});
-
-/* Preset size buttons  */
-presetSizes.querySelectorAll('button').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    presetSizes.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    menuCols.value = btn.dataset.cols;
-    menuRows.value = btn.dataset.rows;
-  });
-});
-
-/* Use uploaded from menu */
-menuUseUploaded.addEventListener('click', ()=>{
-  if (!uploadedURL) return alert('First, upload your image to the menu (file).');
-  imageURL = uploadedURL;
-  selectedPreset = null;
-  document.querySelectorAll('.presetItem').forEach(i=>i.classList.remove('selected'));
-  message.textContent = 'The uploaded image is used. Click "Create Puzzle."';
-});
-
-/* Create puzzle from menu */
-menuCreate.addEventListener('click', ()=>{
-  const c = Math.max(1, Math.min(30, +menuCols.value || 1));
-  const r = Math.max(1, Math.min(30, +menuRows.value || 1));
-  if (!imageURL) return alert('Select or upload an image from the menu.');
-  createPuzzle(imageURL, c, r);
-  closeMenu();
-});
-
-/* Puzzle creation */
-function createPuzzle(imgSrc, c, r) {
-  cols = c; rows = r;
-  const canvasSize = 500;
-  pieceWidth = Math.floor(canvasSize / cols);
-  pieceHeight = Math.floor(canvasSize / rows);
-
-  puzzle.innerHTML = '';
-  cells = [];
-  pieceIdCounter = 0;
-  solvedAlready = false;
-  selectedPiece = null;
-
-  puzzle.style.gridTemplateColumns = `repeat(${cols}, ${pieceWidth}px)`;
-  puzzle.style.gridTemplateRows = `repeat(${rows}, ${pieceHeight}px)`;
-
-  for (let i = 0; i < cols * rows; i++) {
-    const cell = document.createElement('div');
-    cell.className = 'cell';
-    cell.style.width = pieceWidth + 'px';
-    cell.style.height = pieceHeight + 'px';
-    cell.dataset.index = i;
-
-    cell.addEventListener('dragover', e=>{ e.preventDefault(); cell.classList.add('drop-target'); });
-    cell.addEventListener('dragleave', ()=>cell.classList.remove('drop-target'));
-    cell.addEventListener('drop', onDropOnCell);
-
-    const piece = document.createElement('div');
-    piece.className = 'piece';
-    piece.draggable = true;
-    piece.id = 'piece-' + (pieceIdCounter++);
-
-    const rr = Math.floor(i/cols), cc = i%cols;
-    piece.style.backgroundImage = `url(${imgSrc})`;
-    piece.style.backgroundSize = `${cols * pieceWidth}px ${rows * pieceHeight}px`;
-    piece.style.backgroundPosition = `-${cc * pieceWidth}px -${rr * pieceHeight}px`;
-    piece.dataset.correct = i;
-
-    piece.addEventListener('dragstart', e=>{ e.dataTransfer.setData('text/plain', piece.id); piece.classList.add('dragging'); if (!started) startTimer(); });
-    piece.addEventListener('dragend', ()=>{ piece.classList.remove('dragging'); document.querySelectorAll('.cell.drop-target').forEach(el=>el.classList.remove('drop-target')); });
-
-    piece.addEventListener('click', e=>{ e.stopPropagation(); toggleSelect(piece); });
-
-    piece.addEventListener('touchstart', onTouchStart, {passive:false});
-    piece.addEventListener('touchmove', onTouchMove, {passive:false});
-    piece.addEventListener('touchend', onTouchEnd);
-
-    cell.appendChild(piece);
-    cells.push(cell);
-    puzzle.appendChild(cell);
-  }
-
-  shuffle();
-  shuffleBtn.disabled = false;
-  resetTimer();
-  previewContainer.style.display = 'none';
-  previewPuzzle.innerHTML = '';
-  message.textContent = 'The puzzle is complete. Start solving!';
-}
-
-/* Shuffle */
-shuffleBtn.addEventListener('click', ()=>{ shuffle(); solvedAlready=false; hideComplete(); resetTimer(); message.textContent='The puzzle is shuffled'; });
-function shuffle() {
-  if (!cells.length) return;
-  const pieces = cells.map(c=>c.firstChild);
-  for (let i = pieces.length-1; i>0; i--) { const j=Math.floor(Math.random()*(i+1)); [pieces[i],pieces[j]]=[pieces[j],pieces[i]]; }
-  cells.forEach((cell,i)=>cell.appendChild(pieces[i]));
-  document.querySelectorAll('.piece').forEach(p=>p.style.border='2px solid transparent');
-}
-
-/* Drop handler */
-function onDropOnCell(e) {
-  e.preventDefault();
-  this.classList.remove('drop-target');
-  const draggedId = e.dataTransfer.getData('text/plain');
-  const dragged = document.getElementById(draggedId);
-  if (!dragged) return;
-  const targetPiece = this.firstChild;
-  const sourceCell = dragged.parentElement;
-  if (sourceCell === this) return;
-  sourceCell.appendChild(targetPiece);
-  this.appendChild(dragged);
-  dragged.classList.remove('selected','dragging');
-  if (enableCheckEl.checked) checkPositions(); else if (isSolved()) finishPuzzle();
-}
-
-/* Click selection & exchange */
-function toggleSelect(piece) {
-  if (selectedPiece) selectedPiece.classList.remove('selected');
-  if (selectedPiece===piece) { selectedPiece=null; }
-  else { selectedPiece = piece; piece.classList.add('selected'); }
-  if (!started && selectedPiece) startTimer();
-}
-puzzle.addEventListener('click', e=>{
-  const cell = e.target.closest('.cell');
-  if (!cell || !selectedPiece) return;
-  const targetPiece = cell.firstChild;
-  const sourceCell = selectedPiece.parentElement;
-  if (targetPiece === selectedPiece) return;
-  sourceCell.appendChild(targetPiece);
-  cell.appendChild(selectedPiece);
-  selectedPiece.classList.remove('selected');
-  selectedPiece = null;
-  if (enableCheckEl.checked) checkPositions(); else if (isSolved()) finishPuzzle();
-});
-
-/* Check positions */
-function checkPositions() {
-  if (!cells.length) return;
-  let solved = true;
-  cells.forEach((cell,i)=>{
-    const piece = cell.firstChild;
-    if (+piece.dataset.correct === i) piece.style.border='2px solid green';
-    else { piece.style.border='2px solid red'; solved=false; }
-  });
-  if (solved) finishPuzzle();
-}
-function isSolved() { return cells.length && cells.every((cell,i)=> +cell.firstChild.dataset.correct === i); }
-
-/* Finish / overlay */
-function finishPuzzle() {
-  if (solvedAlready) return;
-  solvedAlready = true;
-  stopTimer();
-  message.textContent = 'The puzzle is complete! 🎉';
-  overlayTime.textContent = `Time: ${formatElapsedTime()}`;
-  showComplete();
-}
-function showComplete() { overlayComplete.style.display='flex'; overlayComplete.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
-function hideComplete() { overlayComplete.style.display='none'; overlayComplete.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
-
-overlayShuffle.addEventListener('click', ()=>{ hideComplete(); shuffle(); resetTimer(); solvedAlready=false; message.textContent='The puzzle is mixed up'; });
-overlayNew.addEventListener('click', ()=>{ hideComplete(); openMenu(); });
-overlayClose.addEventListener('click', ()=>{ hideComplete(); });
-
-/* Timer */
-function startTimer() {
-  if (started) return;
-  started = true;
-  startTime = performance.now();
-  timer = setInterval(()=> {
-    const t = performance.now() - startTime;
-    const ms = Math.floor(t % 1000).toString().padStart(3,'0');
-    const sec = Math.floor(t/1000) % 60;
-    const min = Math.floor(t/60000);
-    timerDisplay.textContent = `Time: ${min}:${sec.toString().padStart(2,'0')}:${ms}`;
-  }, 50);
-}
-function stopTimer(){ clearInterval(timer); }
-function resetTimer(){ clearInterval(timer); started=false; startTime=null; timerDisplay.textContent='Time: 0:00:000'; }
-function formatElapsedTime(){ if (!startTime) return '0:00:000'; const t = performance.now()-startTime; const ms=Math.floor(t%1000).toString().padStart(3,'0'); const sec=Math.floor(t/1000)%60; const min=Math.floor(t/60000); return `${min}:${sec.toString().padStart(2,'0')}:${ms}`; }
-
-/* Preview (assembled look) */
-previewBtn.addEventListener('click', ()=>{
-  if (!imageURL) return alert('Choose image from menu');
-  if (previewContainer.style.display === 'block') {
-    previewContainer.style.display='none'; previewContainer.setAttribute('aria-hidden','true'); previewBtn.textContent='Show image';
-    return;
-  }
-  const canvasSize = 500;
-  const pW = Math.floor(canvasSize/cols);
-  const pH = Math.floor(canvasSize/rows);
-  previewPuzzle.innerHTML = '';
-  previewPuzzle.style.gridTemplateColumns = `repeat(${cols}, ${pW}px)`;
-  previewPuzzle.style.gridTemplateRows = `repeat(${rows}, ${pH}px)`;
-  for (let i=0;i<cols*rows;i++){
-    const r=Math.floor(i/cols), c=i%cols;
-    const pp=document.createElement('div');
-    pp.className='previewPiece';
-    pp.style.width=pW+'px';
-    pp.style.height=pH+'px';
-    pp.style.backgroundImage=`url(${imageURL})`;
-    pp.style.backgroundSize = `${cols*pW}px ${rows*pH}px`;
-    pp.style.backgroundPosition = `-${c*pW}px -${r*pH}px`;
-    previewPuzzle.appendChild(pp);
-  }
-  previewContainer.style.display='block';
-  previewContainer.setAttribute('aria-hidden','false');
-  previewBtn.textContent='Hide image';
-});
-
-/* Touch support (mobile drag) */
-let touchDrag = { piece:null, srcCell:null, currentTargetCell:null };
-function onTouchStart(e){ e.preventDefault(); const piece = e.currentTarget; touchDrag.piece = piece; touchDrag.srcCell = piece.parentElement; piece.classList.add('dragging'); if (!started) startTimer(); }
-function onTouchMove(e){ if (!touchDrag.piece) return; e.preventDefault(); const touch = e.changedTouches[0]; const el = document.elementFromPoint(touch.clientX, touch.clientY); const cell = el ? el.closest('.cell') : null; if (cell !== touchDrag.currentTargetCell){ if (touchDrag.currentTargetCell) touchDrag.currentTargetCell.classList.remove('drop-target'); touchDrag.currentTargetCell = cell; if (cell) cell.classList.add('drop-target'); } }
-function onTouchEnd(e){ if (!touchDrag.piece) return; const piece = touchDrag.piece; const targetCell = touchDrag.currentTargetCell; piece.classList.remove('dragging'); if (targetCell && targetCell !== touchDrag.srcCell){ const targetPiece = targetCell.firstChild; const srcCell = touchDrag.srcCell; srcCell.appendChild(targetPiece); targetCell.appendChild(piece); if (enableCheckEl.checked) checkPositions(); else if (isSolved()) finishPuzzle(); } document.querySelectorAll('.cell.drop-target').forEach(el=>el.classList.remove('drop-target')); touchDrag.piece=null; touchDrag.srcCell=null; touchDrag.currentTargetCell=null; }
-
-/* Toggleable "Check positions" behavior */
-/* When the checkbox is changed, apply immediate effect:
-   - If enabled: run checkPositions() to show current green/red borders.
-   - If disabled: clear all borders(no visual checking).
-*/
-enableCheckEl.addEventListener('change', () => {
-  if (enableCheckEl.checked) {
-    checkPositions();
-    message.textContent = 'Position checking is enabled. Correct/incorrect tiles are highlighted.';
-  } else {
-    document.querySelectorAll('.piece').forEach(p => p.style.border = '2px solid transparent');
-    message.textContent = 'Position checking is disabled. The puzzle will only be considered solved if it is in the correct order.';
-  }
-});
-
-message.textContent = 'Click “Menu” at the top to select an image and size. The “Check positions” option can be turned on or off.';
-</script>
 </body>
 </html>
