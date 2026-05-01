@@ -3,7 +3,7 @@ const presets = [
   { id: 'p1', title: 'Mountain', url: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop' },
   { id: 'p2', title: 'City', url: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=1200&auto=format&fit=crop' },
   { id: 'p3', title: 'Animals', url: 'https://images.unsplash.com/photo-1446816653964-521218a8d1c4?q=80&w=1200&auto=format&fit=crop' },
-  { id: 'p4', title: 'Friends', url: 'https://www.stylist.co.uk/_next/image?url=https%3A%2F%2Fmedia.stylist.co.uk%2Fapp%2Fuploads%2F2019%2F09%2F17170451%2Fgettyimages-143479802.jpg&w=3840&q=85q=80&w=1200&auto=format&fit=crop' }
+  { id: 'p4', title: 'Friends', url: 'https://media.glamour.com/photos/572cd8ea2dd313e352685fd3/master/w_1600%2Cc_limit/friends-season-1-fountain.jpg?' }
 ];
 
 // elements
