@@ -249,7 +249,7 @@ function buildPuzzle(imgSrc) {
   resetTimer();
   previewContainer.style.display = 'none';
   previewPuzzle.innerHTML = '';
-  message.textContent = '🎮 Puzzle ready! Start solving!';
+  message.textContent = 'Puzzle ready! Start solving!';
 }
 
 // shuffle
